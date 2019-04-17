@@ -4,6 +4,7 @@ var passport = require('passport');
 var authJwtController = require('./auth_jwt');
 var User = require('./Users');
 var Movie = require('./Movie');
+var Review = require('./Review');
 var jwt = require('jsonwebtoken');
 
 var app = express();
@@ -92,35 +93,55 @@ router.post('/signin', function(req, res) {
             }
         });
 
-
     });
 });
 
 router.route('/movie')
     //find
-    .get(authJwtController.isAuthenticated, function (req, res) {
+    .get(function (req, res) {
         console.log(req.body);
-        Movie.find({ title: req.body.title }).select('title year genre actor').exec(function(err, movie) {
+        Movie.find({title: req.body.title}).select('title year genre actor').exec(function (err, movie) {
             console.log("sending body");
             if (err) {
                 return res.json({
                     status: 500, message: "GET movies", msg: 'something went wrong'
                 })
-            }
-            else if ( movie.length === 0)
-            {
+            } else if (movie.length === 0) {
                 return res.json({
                     status: 404, message: "GET movies", msg: 'no movie found'
                 })
-            }
-            else{
+            } else {
 
-                return res.json({
-                    status: 200, message: "GET movies",
-                    msg: "The movie was found, now displaying information about the movie",
-                    movie: movie
-                })
+                if (req.body.hasOwnProperty('review') && req.body.review === true) {
+                    Review.find({userMovie: {$in: [ req.body.title]}}).exec(function (err, review) {
+                        if (err) {
+                            res.json({
+                                status: 500, ReviewMsg: 'something went with the review wrong'
+                            })
+                        } else if (review.length === 0) {
+                            res.json({
+                                status: 404, ReviewMsg: 'no review found'
+                            })
+                        } else {
+                            res.json({
+                                reviewMsg: "Review found, sending review and movie",
+                                movie: movie,
+                                review: review
+                            })
+                        }
+                    });
+                }
+                else{
+                    return res.json({
+                        status: 200, message: "GET movies",
+                        msg: "The movie was found, now displaying information about the movie",
+                        movie: movie
+                    })
+
+                }
+
             }
+
         })
     })
     //updateOne
@@ -148,29 +169,60 @@ router.route('/movie')
     )//save
     .post( authJwtController.isAuthenticated, function (req, res) {
         console.log(req.body);
-        if(req.body.actor.length < 3)
+        if (req.body.actor.length < 3)
             return res.json({status: 404, message: 'not enough actors'});
 
-        var movieNew = new Movie();
-        movieNew.title = req.body.title;
-        movieNew.year = req.body.year;
-        movieNew.genre = req.body.genre;
-        movieNew.actor = req.body.actor;
 
-        movieNew.save(function (err) {
+        if (req.body.hasOwnProperty('review') && req.body.review === true) {
+            Movie.find({title: req.body.title}).exec(function (err, movie) {
+                if (movie.length === 0) {
+                    return res.json({status: 404, message: 'A movie with that title does not exists. '});
+                }
+                var reviewNew = new Review();
+                reviewNew.userMovie = ["",""];
+                reviewNew.userMovie[0] = req.body.username;
+                reviewNew.userMovie[1] = req.body.title;
+                reviewNew.rating = req.body.rating;
+                reviewNew.quote = req.body.quote;
 
-            if (err) {
-                // duplicate entry
-                if (err.code == 11000)
-                    return res.json({status: 404, message: 'A movie with that title already exists. '});
-                else
-                    return res.json({status: 404, message: 'Missing movie information.'});
-            }
-            res.json({status: 200, message: 'Movie created!'});
-        });
+                reviewNew.save(function (err) {
+
+                    if (err) {
+                        // duplicate entry
+                        if (err.code === 11000)
+                            return res.json({
+                                status: 400,
+                                message: 'A review with that movie title and user already exists.'
+                            });
+                        else
+                            return res.json({status: 404, message: 'Movie review could not be created.'});
+                    }
+                    res.json({status: 200, message: 'Review created!'});
+                });
+            })
+        }
+        else {
+            var movieNew = new Movie();
+            movieNew.title = req.body.title;
+            movieNew.year = req.body.year;
+            movieNew.genre = req.body.genre;
+            movieNew.actor = req.body.actor;
+
+            movieNew.save(function (err) {
+
+                if (err) {
+                    // duplicate entry
+                    if (err.code === 11000)
+                        return res.json({status: 404, message: 'A movie with that title already exists. '});
+                    else
+                        return res.json({status: 404, message: 'Missing movie information.'});
+                }
+                res.json({status: 200, message: 'Movie created!'});
+            });
+        }
     })
     //findOneAndDelete
-    .delete( authJwtController.isAuthenticated, function (req,res) {
+    .delete(authJwtController.isAuthenticated, function (req,res) {
         var movie = Movie();
         movie.title = req.body.title;
         Movie.findOneAndDelete({title: movie.title}).exec(function (err) {
@@ -184,7 +236,7 @@ router.route('/movie')
                 })
             }
         })
-    });
+    })
 
 app.use('/', router);
 
@@ -192,4 +244,4 @@ app.use(function(req, res){
     res.status(404).send({success: false, msg: 'http method not supported'});
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 10808);
