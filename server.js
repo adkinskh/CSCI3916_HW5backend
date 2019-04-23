@@ -171,6 +171,11 @@ router.route('/movie')
         console.log(req.body);
         if (req.body.actor.length < 3)
             return res.json({status: 404, message: 'not enough actors'});
+        let usertoken = req.headers.authorization;
+
+        let token = usertoken.split(' ');
+
+        let decoded = jwt.verify(token[1], process.env.SECRET_KEY);
 
 
         if (req.body.hasOwnProperty('review') && req.body.review === true) {
@@ -178,9 +183,9 @@ router.route('/movie')
                 if (movie.length === 0) {
                     return res.json({status: 404, message: 'A movie with that title does not exists. '});
                 }
-                var reviewNew = new Review();
+                let reviewNew = new Review();
                 reviewNew.userMovie = ["",""];
-                reviewNew.userMovie[0] = req.body.username;
+                reviewNew.userMovie[0] = decoded.username;
                 reviewNew.userMovie[1] = req.body.title;
                 reviewNew.rating = req.body.rating;
                 reviewNew.quote = req.body.quote;
@@ -202,7 +207,7 @@ router.route('/movie')
             })
         }
         else {
-            var movieNew = new Movie();
+            let movieNew = new Movie();
             movieNew.title = req.body.title;
             movieNew.year = req.body.year;
             movieNew.genre = req.body.genre;
@@ -223,7 +228,7 @@ router.route('/movie')
     })
     //findOneAndDelete
     .delete(authJwtController.isAuthenticated, function (req,res) {
-        var movie = Movie();
+        let movie = Movie();
         movie.title = req.body.title;
         Movie.findOneAndDelete({title: movie.title}).exec(function (err) {
             if(err)
