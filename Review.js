@@ -11,7 +11,7 @@ var ReviewSchema = new Schema({
     userMovie: {
         type: Array,
         required: true,
-        index:{unique:true}},
+        index:{unique:false}},
 
     rating: {type: Number, enum:[1,2,3,4,5], required: true},
 
