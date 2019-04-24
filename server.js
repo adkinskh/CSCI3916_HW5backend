@@ -6,6 +6,7 @@ var User = require('./Users');
 var Movie = require('./Movie');
 var Review = require('./Review');
 var jwt = require('jsonwebtoken');
+var cors = require('cors')
 
 var app = express();
 module.exports = app; // for testing
@@ -13,10 +14,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
+app.use(cors());
 
 var router = express.Router();
 
-router.route('/postjwt')
+app.route('/postjwt')
     .post(authJwtController.isAuthenticated, function (req, res) {
             console.log(req.body);
             res = res.status(200);
@@ -28,7 +30,7 @@ router.route('/postjwt')
         }
     );
 
-router.route('/users/:userId')
+app.route('/users/:userId')
     .get(authJwtController.isAuthenticated, function (req, res) {
         var id = req.params.userId;
         User.findById(id, function(err, user) {
@@ -40,7 +42,7 @@ router.route('/users/:userId')
         });
     });
 
-router.route('/users')
+app.route('/users')
     .get(authJwtController.isAuthenticated, function (req, res) {
         User.find(function (err, users) {
             if (err) res.send(err);
@@ -49,7 +51,7 @@ router.route('/users')
         });
     });
 
-router.post('/signup', function(req, res) {
+app.post('/signup', function(req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, message: 'Please pass username and password.'});
     }
@@ -73,7 +75,7 @@ router.post('/signup', function(req, res) {
     }
 });
 
-router.post('/signin', function(req, res) {
+app.post('/signin', function(req, res) {
     var userNew = new User();
     userNew.name = req.body.name;
     userNew.username = req.body.username;
@@ -96,7 +98,7 @@ router.post('/signin', function(req, res) {
     });
 });
 
-router.route('/movie')
+app.route('/movie')
     //find
     .get(function (req, res) {
         console.log(req.body);
@@ -112,7 +114,7 @@ router.route('/movie')
                 })
             } else {
 
-                if (req.body.hasOwnProperty('review') && req.body.review === true) {
+                if (req.body.hasOwnProperty('review') && req.body.review === true || req.query.review == true) {
                     Review.find({userMovie: {$in: [ req.body.title]}}).exec(function (err, review) {
                         if (err) {
                             res.json({
