@@ -113,7 +113,7 @@ app.route('/movie')
                     status: 404, message: "GET movies", msg: 'no movie found'
                 })
             } else {
-                if (req.body.hasOwnProperty('review') && req.body.review === true) {
+                if ((req.body.hasOwnProperty('review') && req.body.review === true)|| req.params.reviews === true) {
                     Review.find({userMovie: {$in: [ req.body.title]}}).exec(function (err, review) {
                         if (err) {
                             res.json({

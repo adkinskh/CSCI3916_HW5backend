@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d9ee19f9-cc16-478b-9ef6-92d5d45bbb3c" name="Default" comment="This allows users to save reviews">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="113" column="18" lean-forward="true" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
+            <state relative-caret-position="85">
+              <caret line="116" column="76" selection-start-line="116" selection-start-column="76" selection-end-line="116" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -234,7 +232,7 @@
       <workItem from="1555462453898" duration="7994000" />
       <workItem from="1556056540807" duration="5526000" />
       <workItem from="1556072084437" duration="7000" />
-      <workItem from="1556132719430" duration="1352000" />
+      <workItem from="1556132719430" duration="4845000" />
     </task>
     <task id="LOCAL-00001" summary="This is a working api that allows users to sign up with an account, save and upload new movies.">
       <created>1552964333016</created>
@@ -285,11 +283,25 @@
       <option name="project" value="LOCAL" />
       <updated>1556070306553</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="This allows users to save reviews">
+      <created>1556136315616</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1556136315616</updated>
+    </task>
+    <task id="LOCAL-00009" summary="This allows users to save reviews">
+      <created>1556137507700</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1556137507700</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85958000" />
+    <option name="totallyTimeSpent" value="89451000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -304,13 +316,13 @@
     <frame x="-6" y="-6" width="973" height="693" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4937833" visible="true" weight="0.20490928" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49291784" visible="true" weight="0.20490928" />
       <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.5062167" side_tool="true" visible="true" weight="0.20490928" />
+      <window_info id="npm" order="2" sideWeight="0.50708216" side_tool="true" visible="true" weight="0.20490928" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3732504" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37300178" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.2674961" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -465,8 +477,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="113" column="18" lean-forward="true" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
+        <state relative-caret-position="85">
+          <caret line="116" column="76" selection-start-line="116" selection-start-column="76" selection-end-line="116" selection-end-column="76" />
         </state>
       </provider>
     </entry>
