@@ -6,7 +6,8 @@ var User = require('./Users');
 var Movie = require('./Movie');
 var Review = require('./Review');
 var jwt = require('jsonwebtoken');
-var cors = require('cors')
+var cors = require('cors');
+var parse = require('url-parse');
 
 var app = express();
 module.exports = app; // for testing
@@ -20,7 +21,6 @@ var router = express.Router();
 
 app.route('/postjwt')
     .post(authJwtController.isAuthenticated, function (req, res) {
-            console.log(req.body);
             res = res.status(200);
             if (req.get('Content-Type')) {
                 console.log("Content-Type: " + req.get('Content-Type'));
@@ -70,34 +70,88 @@ app.post('/signup', function(req, res) {
                     return res.send(err);
             }
 
-            res.json({ success: true, message: 'User created!' });
+            res.json({ success: true, message: 'User created!' , ok: true});
         });
     }
 });
 
 app.post('/signin', function(req, res) {
+    console.log(req.body);
     var userNew = new User();
-    userNew.name = req.body.name;
+    //userNew.name = req.body.name;
     userNew.username = req.body.username;
     userNew.password = req.body.password;
 
     User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
+        console.log(userNew);
         if (err) res.send(err);
-
-        user.comparePassword(userNew.password, function(isMatch){
-            if (isMatch) {
-                var userToken = {id: user._id, username: user.username};
-                var token = jwt.sign(userToken, process.env.SECRET_KEY);
-                res.json({success: true, token: 'JWT ' + token});
-            }
-            else {
-                res.status(401).send({success: false, message: 'Authentication failed.'});
-            }
-        });
-
+        else if (user === null)
+        {
+            //console.log("no user");
+            res.status(401).send({success: false, message: 'Authentication failed.'});
+        }
+        else {
+            user.comparePassword(userNew.password, function (isMatch) {
+                if (isMatch) {
+                    //console.log("its a match");
+                    var userToken = {id: user._id, username: user.username};
+                    var token = jwt.sign(userToken, process.env.SECRET_KEY);
+                    res.json({success: true, token: 'JWT ' + token});
+                } else {
+                    //console.log("wrong password");
+                    res.status(401).send({success: false, message: 'Authentication failed.'});
+                }
+            });
+        }
     });
 });
 
+app.route('/movies/:movieId')
+    .get(authJwtController.isAuthenticated, function (req, res) {
+        Movie.find({"._id" : req.query} ).exec(function(err, movie){
+
+        })
+    })
+
+//route all movies
+app.route('/movies')
+    .get(authJwtController.isAuthenticated, function (req, res) {
+        //console.log(req);
+        if(req.url.indexOf("reviews=true") !== -1){
+            Movie.aggregate([{
+                $lookup:
+                    {
+                        from: "reviews",
+                        localField: "title",
+                        foreignField: "reviewMovie",
+                as: "reviews"
+                    }
+
+            }], function (err, result) {
+                if (err){
+                    res.send(err)
+                }
+                else{
+                   res.send (result)
+                }
+                }
+
+            )/*.then(function (movies) {
+                res.status(200).send([movies]);
+                console.log({movies});
+            })*/
+        }
+        else
+        {
+            Movie.find().exec(function (err, moviefound) {
+                res.status(200).send({success: true, movies: moviefound});
+            });
+        }
+    });
+
+
+
+//single movie
 app.route('/movie')
     //find
     .get(function (req, res) {
@@ -114,7 +168,7 @@ app.route('/movie')
                 })
             } else {
                 if ((req.body.hasOwnProperty('review') && req.body.review === true)|| req.params.reviews === true) {
-                    Review.find({userMovie: {$in: [ req.body.title]}}).exec(function (err, review) {
+                    Review.find({reviewMovie:  req.body.title}).exec(function (err, review) {
                         if (err) {
                             res.json({
                                 status: 500, ReviewMsg: 'something went with the review wrong'
@@ -185,9 +239,8 @@ app.route('/movie')
                     return res.json({status: 404, message: 'A movie with that title does not exists. '});
                 }
                 let reviewNew = new Review();
-                reviewNew.userMovie = ["",""];
-                reviewNew.userMovie[0] = decoded.username;
-                reviewNew.userMovie[1] = req.body.title;
+                reviewNew.reviewUser = decoded.username;
+                reviewNew.reviewMovie = req.body.title;
                 reviewNew.rating = req.body.rating;
                 reviewNew.quote = req.body.quote;
 
@@ -242,7 +295,7 @@ app.route('/movie')
                 })
             }
         })
-    })
+    });
 
 app.use('/', router);
 

@@ -8,16 +8,20 @@ mongoose.connect(process.env.DB, { useNewUrlParser: true } );
 
 // user schema
 var ReviewSchema = new Schema({
-    userMovie: {
-        type: Array,
-        required: true,
-        index:{unique:false}},
+    reviewUser: {
+        type: String,
+        required: true},
+
+    reviewMovie: {
+        type: String,
+        required: true},
 
     rating: {type: Number, enum:[1,2,3,4,5], required: true},
 
-    quote: {type: String, required: true}
+    review: {type: String, required: true}
 
 });
 
 // return the model
 module.exports = mongoose.model('Review', ReviewSchema);
+
