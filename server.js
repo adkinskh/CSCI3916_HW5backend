@@ -122,16 +122,16 @@ Movie.find({"_id": req.params.movieId}).exec(function (err, movie) {
                     else{
 
                         let newObject={
-                            actor: movie.actor,
-                            _id: movie._id,
-                            title: movie.title,
-                            year: movie.year,
-                            genre: movie.genre,
-                            imageUrl: movie.imageUrl,
-                            __v: movie.__v,
+                            actor: movie[0].actor,
+                            _id: movie[0]._id,
+                            title: movie[0].title,
+                            year: movie[0].year,
+                            genre: movie[0].genre,
+                            imageUrl: movie[0].imageUrl,
+                            __v: movie[0].__v,
                             reviews: review
                         };
-                        console.log(newObject);
+                        console.log(movie[0].actor);
 
                         res.send (newObject);
                     }
