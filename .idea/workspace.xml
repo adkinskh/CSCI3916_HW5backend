@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d9ee19f9-cc16-478b-9ef6-92d5d45bbb3c" name="Default" comment="This allows users to save reviews">
+    <list default="true" id="d9ee19f9-cc16-478b-9ef6-92d5d45bbb3c" name="Default" comment="sends movie">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -18,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="29" column="9" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+            <state relative-caret-position="311">
+              <caret line="115" column="16" selection-start-line="115" selection-start-column="16" selection-end-line="115" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -138,8 +138,8 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/Review.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/Movie.js" />
+        <option value="$PROJECT_DIR$/server.js" />
       </list>
     </option>
   </component>
@@ -264,7 +264,7 @@
       <workItem from="1556565021151" duration="1033000" />
       <workItem from="1556662558457" duration="2716000" />
       <workItem from="1556733199694" duration="2990000" />
-      <workItem from="1556775820980" duration="597000" />
+      <workItem from="1556775820980" duration="815000" />
     </task>
     <task id="LOCAL-00001" summary="This is a working api that allows users to sign up with an account, save and upload new movies.">
       <created>1552964333016</created>
@@ -343,11 +343,18 @@
       <option name="project" value="LOCAL" />
       <updated>1556766972872</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="sends movie">
+      <created>1556777006546</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1556777006548</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138871000" />
+    <option name="totallyTimeSpent" value="139089000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -368,7 +375,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3445826" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3445826" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.26642984" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -448,7 +455,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="This is a working api that allows users to sign up with an account, save and upload new movies." />
     <MESSAGE value="This allows users to save reviews" />
-    <option name="LAST_COMMIT_MESSAGE" value="This allows users to save reviews" />
+    <MESSAGE value="sends movie" />
+    <option name="LAST_COMMIT_MESSAGE" value="sends movie" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -508,8 +516,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="29" column="9" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+        <state relative-caret-position="311">
+          <caret line="115" column="16" selection-start-line="115" selection-start-column="16" selection-end-line="115" selection-end-column="16" />
         </state>
       </provider>
     </entry>

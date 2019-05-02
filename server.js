@@ -106,7 +106,7 @@ app.post('/signin', function(req, res) {
     });
 });
 
-app.route('/movies/:movieId')
+app.route('/movie/:movieId')
     .get(authJwtController.isAuthenticated, function (req, res) {
         Movie.find({"._id" : req.query} ).exec(function(err, movie){
 
