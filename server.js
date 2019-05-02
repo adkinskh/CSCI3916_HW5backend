@@ -108,38 +108,44 @@ app.post('/signin', function(req, res) {
 
 app.route('/movies/:movieId')
     .get(authJwtController.isAuthenticated, function (req, res) {
-        if(req.url.indexOf("reviews=true") !== -1) {
-            Movie.aggregate(
-                [
-                    {
-                        $lookup:
-                            {
-                                from: "reviews",
-                                localField: "title",
-                                foreignField: "reviewMovie",
-                                as: "reviews"
-                            }
-                    },
-                    { $match : { "._id" :  req.query} },
-                    function (err, result) {
-                    if (err){
+/*
+
+ */
+Movie.find({"_id": req.params.movieId}).exec(function (err, movie) {
+        if(req.query.reviews) {
+
+            Review.find({reviewMovie:  req.body.title}).exec(function (err, review){
+            if (err){
+                        console.log(err);
                         res.send(err)
                     }
                     else{
-                        res.send (result)
+
+                        let newObject={
+                            actor: movie.actor,
+                            _id: movie._id,
+                            title: movie.title,
+                            year: movie.year,
+                            genre: movie.genre,
+                            imageUrl: movie.imageUrl,
+                            __v: movie.__v,
+                            reviews: review
+                        };
+                        console.log(newObject);
+
+                        res.send (newObject);
                     }
-                }]
-            );
+                });
         }
         else {
-            Movie.find({"._id": req.query}).exec(function (err, movie) {
 
                 if (err)
                     res.send(err)
                 else
                     res.send(movie);
-            })
+
         }
+        })
     });
 
 //route all movies
