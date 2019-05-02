@@ -110,8 +110,12 @@ app.route('/movies/:movieId')
     .get(authJwtController.isAuthenticated, function (req, res) {
         Movie.find({"._id" : req.query} ).exec(function(err, movie){
 
+            if(err)
+                res.send(err)
+            else
+                res.send(movie);
         })
-    })
+    });
 
 //route all movies
 app.route('/movies')
