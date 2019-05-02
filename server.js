@@ -106,7 +106,7 @@ app.post('/signin', function(req, res) {
     });
 });
 
-app.route('/movie/:movieId')
+app.route('/movies/:movieId')
     .get(authJwtController.isAuthenticated, function (req, res) {
         if(req.url.indexOf("reviews=true") !== -1) {
             Movie.aggregate(
