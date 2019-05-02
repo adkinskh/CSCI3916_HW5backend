@@ -206,6 +206,7 @@ app.route('/movie')
         movie.year = req.body.year;
         movie.genre = req.body.genre;
         movie.actor = req.body.actor;
+        movie.imageUrl = req.body.imageUrl;
 
         Movie.updateOne({title: movie.title}).exec(function (err) {
             if(err){
